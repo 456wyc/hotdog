@@ -1,0 +1,7 @@
+# Hotkey Conflict Detector Dependencies
+
+# Windows API access
+pywin32>=304
+
+# System process information
+psutil>=5.8.0
