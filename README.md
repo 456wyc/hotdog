@@ -1,6 +1,26 @@
-# Hotdog
+# Hotdog · Windows 热键冲突检测器
 
 一个功能强大的Windows热键冲突检测和分析工具，提供智能冲突分析、用户热键管理和多格式报告导出。
+
+<p align="center">
+  <img src="docs/assets/screenshot-v2.png" alt="热键冲突检测器 v2.0 主界面：冲突概览" width="920">
+</p>
+
+<p align="center">
+  <a href="https://456wyc.github.io/hotdog/"><strong>🌐 项目主页</strong></a> ·
+  <a href="#-功能特点">功能特点</a> ·
+  <a href="#-安装步骤">快速开始</a> ·
+  <a href="#-项目结构">项目结构</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0-0ea5e9" alt="version 2.0">
+  <img src="https://img.shields.io/badge/python-3.6%2B-3776ab?logo=python&logoColor=white" alt="python 3.6+">
+  <img src="https://img.shields.io/badge/platform-Windows%207%2F8%2F10%2F11-0078d4?logo=windows" alt="windows">
+  <img src="https://img.shields.io/badge/GUI-tkinter-ff9f1c" alt="tkinter">
+</p>
+
+> 一次扫描即可看到系统级、应用程序、注册表与活动窗口的全部热键，并按 `critical / high / medium / low` 分级给出冲突原因与替代方案。
 
 ## 🚀 功能特点
 
@@ -18,14 +38,14 @@
   - 虚拟键码解析
   - 修饰键标准化处理
   - 进程信息关联
-  - 已知热键数据库（35+系统热键和17+通用应用热键）
+  - 已知热键数据库（18个系统热键和17+通用应用热键）
 
 ### 智能冲突分析
 
 - **多维度评分系统**：
 
   - 源类型优先级：系统级(100) > 知名软件(80) > 应用程序(60) > 用户定义(40)
-  - 应用程序重要性评分（40+常用应用程序）
+  - 应用程序重要性评分（26个常用应用程序）
   - 冲突严重程度：critical > high > medium > low
 - **冲突分类系统**：
 
@@ -79,6 +99,18 @@
   - 配置验证和自动修复
   - 配置导入/导出功能
   - 默认配置自动生成
+
+## 🖼️ 界面预览
+
+### 冲突概览
+
+扫描完成后的主界面，左侧为统计概览与严重程度分布，右侧列表按 `热键组合 / 冲突应用 / 类型 / 严重程度 / 建议` 展示全部冲突。
+
+![冲突概览](./docs/assets/screenshot-v2.png)
+
+图中示例：共检测到 **452** 个热键（系统热键 16 个、应用热键 436 个），其中 `Win+L`、`Alt+Tab`、`Ctrl+Alt+Del` 等系统级热键被标记为 `system_override` 且严重程度为 `critical`，`chrome.exe`、`notepad.exe` 等应用之间的重复绑定被标记为 `cross_application`。
+
+> 更多界面截图欢迎提交 PR 补充；站点版本见 [项目主页](https://456wyc.github.io/hotdog/)。
 
 ## 🛠️ 系统要求
 
@@ -226,6 +258,12 @@ hotdog/
 │   ├── 安装依赖.bat                 # 安装脚本
 │   └── README.md                    # 使用说明
 │
+├── docs/                            # GitHub Pages 项目主页
+│   ├── index.html                   # 落地页
+│   ├── styles.css                   # 样式
+│   ├── script.js                    # 交互脚本
+│   └── assets/screenshot-v2.png     # 界面截图
+│
 ├── 运行时目录 (自动创建)
 │   ├── config/                      # 配置文件
 │   ├── data/                        # 用户数据
@@ -297,6 +335,39 @@ A: 用户自定义热键可以：
    - INI配置文件管理
    - 自动目录创建和管理
 
+## 🌐 项目主页
+
+项目官网托管在 GitHub Pages：**<https://456wyc.github.io/hotdog/>**
+
+站点源码位于 `docs/`，纯静态实现（HTML + CSS + 原生 JS，无构建步骤、无第三方依赖）：
+
+```
+docs/
+├── index.html      # 落地页：Hero / 界面预览 / 功能 / 流程 / 快速开始 / FAQ
+├── styles.css      # 暗色主题、响应式布局与动效
+├── script.js       # 滚动入场、移动端菜单、安装方式切换、一键复制
+├── .nojekyll       # 跳过 Jekyll 处理
+└── assets/
+    └── screenshot-v2.png
+```
+
+### 本地预览
+
+```bash
+python -m http.server 8000 --directory docs
+# 打开 http://localhost:8000
+```
+
+### 部署方式
+
+仓库已内置 `.github/workflows/pages.yml`，推送到 `master` 且 `docs/` 发生变化时自动发布：
+
+1. 打开仓库 **Settings → Pages**
+2. **Build and deployment → Source** 选择 **GitHub Actions**
+3. 推送到 `master`，或在 **Actions** 中手动运行 *Deploy GitHub Pages*
+
+> 也可以不使用 Actions：在 Pages 中把 Source 设为 *Deploy from a branch*，分支选 `master`、目录选 `/docs`。
+
 ## 📊 开发信息
 
 - **编程语言**: Python 3
@@ -305,3 +376,4 @@ A: 用户自定义热键可以：
 - **进程管理**: psutil
 - **数据格式**: JSON, CSV, INI
 - **架构模式**: MVC模式
+- **项目主页**: 静态站点 (`docs/`) + GitHub Pages
